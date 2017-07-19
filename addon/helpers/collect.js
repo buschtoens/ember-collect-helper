@@ -47,15 +47,31 @@ import { isPresent } from '@ember/utils';
  * You can also replace the `source` object altogether or change the specified
  * `paths`. Everything will always stay in sync.
  *
- * To allow maximum flexibility, `paths` can also be a string, in which case it
- * is automatically wrapped in an array. This means that the following two
- * invocations are functionally equivalent, assuming that you have an
- * [`{{array}}`](https://github.com/DockYard/ember-composable-helpers#array)
- * helper which returns an array.
+ * To allow maximum flexibility, `paths` can also be a string, in which case the
+ * value is returned as is and not wrapped in an array.
+ * This means that the following two invocations have different return values:
+ *
+ * ```js
+ * const source = { foo: 'bar' };
+ * const arrayPath = ['foo'];
+ * const singularPath = 'foo';
+ * ```
  *
  * ```hbs
- * {{collect source (array "foo")}}
- * {{collect source "foo"}}
+ * {{collect source arrayPath}}    => ['bar']
+ * {{collect source singularPath}} => 'bar'
+ * ```
+ *
+ * This is especially useful, when you are replacing `{{get}}` with
+ * `{{collect}}`, but have some surrounding code that still expects the
+ * unwrapped value for cases where `paths` is not an array, but also just a
+ * single path, as it would be with `{{get}}`.
+ *
+ * You can disable this behavior and make `{{collect}}` always return an array
+ * by passing `wrapSingular=true`.
+ *
+ * ```hbs
+ * {{collect source "foo" wrapSingular=true}} => ['bar']
  * ```
  *
  * @module EmberCollectHelper
@@ -82,20 +98,31 @@ export default class extends Helper {
   paths = A();
 
   /**
+   * @property isSingular
+   * @type {Boolean}
+   * @default false
+   * @private
+   */
+  isSingular = false;
+
+  /**
    * @method compute
    * @param  {Object}   source The object to collect values from
    * @param  {String[]} paths  The paths to collect
    * @param  {Object}   options
    * @param  {Object}   [options.defaultValue=null]
+   * @param  {Object}   [options.wrapSingular=false]
    * @return {Array} If the given `source` is present, returns an array of the
    *   collected values in the order that they were specified in `paths`.
    *   If the given `source` is empty, returns an empty array (`[]`).
    */
-  compute([source, paths], { defaultValue = null }) {
+  compute([source, paths], { defaultValue = null, wrapSingular = false }) {
     this.updateSource(source);
-    this.updatePaths(A(makeArray(paths)));
+    this.updatePaths(A(makeArray(paths)), {
+      isSingular: typeof paths === 'string' || typeof paths === 'number'
+    });
 
-    return this.collectValues({ defaultValue });
+    return this.collectValues({ defaultValue, wrapSingular });
   }
 
   /**
@@ -124,12 +151,16 @@ export default class extends Helper {
    *
    * @method updatePaths
    * @param  {String[]} newPaths
+   * @param  {Object}   [options]
+   * @param  {Boolean}  [options.isSingular=false]
    * @return {Boolean} If the `newPaths` were actually different from the old
    *   paths and thus an update was performed.
    * @private
    */
-  updatePaths(newPaths) {
+  updatePaths(newPaths, { isSingular = false } = {}) {
     const oldPaths = get(this, 'paths');
+
+    set(this, 'isSingular', isSingular);
 
     if (get(oldPaths, 'length') === get(newPaths, 'length')) {
       if (oldPaths.every((path, i) => path === newPaths.objectAt(i))) {
@@ -165,6 +196,7 @@ export default class extends Helper {
    * @param  {Boolean} [options.defaultValue=null] The value to be used when a
    *   paths cannot be found on the `source` object. Effectively what you would
    *   pass to `Ember.getWithDefault`.
+   * @param  {Boolean} [options.wrapSingular=false]
    * @return {Array} If the given `source` is present, returns an array of the
    *   collected values in the order that they were specified in `paths`.
    *   If the given `source` is empty, returns an empty array (`[]`).
@@ -172,14 +204,19 @@ export default class extends Helper {
    *   their place.
    * @private
    */
-  collectValues({ defaultValue = null } = {}) {
+  collectValues({ defaultValue = null, wrapSingular = false } = {}) {
     const source = get(this, 'source');
     const paths = get(this, 'paths');
+    const shouldUnwrap = get(this, 'isSingular') && !wrapSingular;
 
     if (isPresent(source)) {
-      return paths.map(path => getWithDefault(source, path, defaultValue));
+      const values =  paths.map(path => getWithDefault(source, path, defaultValue));
+
+      console.log((shouldUnwrap ? values[0] : values).constructor);
+      return shouldUnwrap ? values[0] : values;
     }
 
-    return [];
+
+    return shouldUnwrap ? defaultValue : [];
   }
 }

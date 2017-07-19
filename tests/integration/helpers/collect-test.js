@@ -65,14 +65,56 @@ test('it returns the configured `defaultValue` for unknown paths', function(asse
   assert.equal(this.$().text().trim(), 'default');
 });
 
-test('it returns the values for arbitrarily depply nested paths in the order that they were specified', function(assert) {
+test('it returns the values for arbitrarily deeply nested paths in the order that they were specified', function(assert) {
   setProperties(this, {
     source: lettersAndNumbers(),
     paths: ['b.2', 'd', 'c.3.x']
   });
 
-  this.render(hbs`{{collect source paths }}`);
+  this.render(hbs`{{collect source paths}}`);
   assert.equal(this.$().text().trim(), 'b2,d,c3x');
+});
+
+test('it does not wrap a singular path by default', function(assert) {
+  setProperties(this, {
+    source: lettersAndNumbers(),
+    paths: 'c.3.x'
+  });
+
+  this.render(hbs`{{collect source paths}}`);
+  assert.equal(this.$().text().trim(), 'c3x', 'return value is correct');
+
+  this.render(hbs`{{get (collect source paths) 'length'}}`);
+  assert.equal(this.$().text().trim(), '3', 'length is 3');
+
+  // this.render(hbs`{{get (collect source paths) 'constructor'}}`);
+  // assert.ok(this.$().text().includes('String'), 'type is string');
+});
+
+test('it returns `defaultValue` for a singular path if the `source` is empty', function(assert) {
+  setProperties(this, {
+    source: null,
+    paths: 'c.3.x'
+  });
+
+  this.render(hbs`{{collect source paths defaultValue="default"}}`);
+  assert.equal(this.$().text().trim(), 'default', 'return value is correct');
+});
+
+test('it wraps a singular path, if `wrapSingular=true`', function(assert) {
+  setProperties(this, {
+    source: lettersAndNumbers(),
+    paths: 'c.3.x'
+  });
+
+  this.render(hbs`{{collect source paths wrapSingular=true}}`);
+  assert.equal(this.$().text().trim(), 'c3x', 'return value is correct');
+
+  this.render(hbs`{{get (collect source paths wrapSingular=true) 'length'}}`);
+  assert.equal(this.$().text().trim(), '1', 'length is 1');
+
+  this.render(hbs`{{get (collect source paths wrapSingular=true) 'constructor'}}`);
+  assert.ok(this.$().text().includes('Array'), 'type is array');
 });
 
 test('updating observed properties on the source object triggers a recomputation', function(assert) {
@@ -81,7 +123,7 @@ test('updating observed properties on the source object triggers a recomputation
     paths: ['b.2', 'd', 'c.3.x']
   });
 
-  this.render(hbs`{{collect source paths }}`);
+  this.render(hbs`{{collect source paths}}`);
   assert.equal(this.$().text().trim(), 'b2,d,c3x', 'initial return value is correct');
 
   run(() => {

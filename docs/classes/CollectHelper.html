@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CollectHelper - ember-collect-helper</title>
+    <meta name="description" content="Ember.computed.collect as a template helper">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/theme.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700' rel='stylesheet' type='text/css'>
+    
+
+</head>
+<body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a href="../" class="navbar-brand">
+              <img src="../assets/img/ember-logo.png" alt="enterprise logo">
+            <span>collect-helper</span>
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="nav">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://github.com/buschtoens/ember-collect-helper" class="fa fa-github github"></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div id="main-wrapper" class="row">
+        <div id="content-wrapper">
+            <ol class="panel-group" id="sidebar" role="tablist" aria-multiselectable="true">
+                <li class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="sidebar-search-heading">
+                        <h4 class="panel-title">
+                      <a role="button" data-toggle="collapse" href="#sidebar-search" aria-expanded="true" aria-controls="collapseOne">
+                        Search
+                      </a>
+                    </h4>
+                    </div>
+                    <div id="sidebar-search" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="sidebar-search-heading">
+                        <div class="panel-body">
+                            <div id="api-tabview-filter">
+                                <input type="search" id="api-filter" placeholder="Search...">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                    <li class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="sidebar-version-heading">
+                            <h4 class="panel-title">
+                                <a role="button" href="https://github.com/buschtoens/ember-collect-helper/commits/5bf1a42a" target="_blank">
+                                  Tag: 0.1.0.5bf1a42a
+                                </a>
+                            </h4>
+                        </div>
+                    </li>
+                <li class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="sidebar-modules-heading">
+                        <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" href="#sidebar-modules" aria-expanded="true" aria-controls="collapseOne">
+                      Modules
+                    </a>
+                  </h4>
+                    </div>
+                    <div id="sidebar-modules" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="sidebar-modules-heading">
+                        <div class="panel-body">
+                                <ol>
+                                        <li>
+                                            <a href="../modules/EmberCollectHelper.html">EmberCollectHelper</a>
+                                        </li>
+                                </ol>
+                        </div>
+                    </div>
+                </li>
+            
+                <li class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="sidebar-classes-heading">
+                        <h4 class="panel-title">
+                      <a role="button" data-toggle="collapse" href="#sidebar-classes" aria-expanded="true" aria-controls="collapseOne">
+                        Classes
+                      </a>
+                    </h4>
+                    </div>
+                    <div id="sidebar-classes" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="sidebar-classes-heading">
+                        <div class="panel-body">
+                            <ol>
+                                    <li>
+                                        <a href="../classes/CollectHelper.html">CollectHelper</a>
+                                    </li>
+                            </ol>
+                        </div>
+                    </div>
+                </li>
+            </ol>
+            <div class="content-container">
+                <div class="apidocs">
+                    <div id="docs-main">
+                        <div class="content">
+
+
+<div class="page-header">
+    <h1> <i class="fa fa-bookmark-o" aria-hidden="true"></i> CollectHelper Class
+            <a class="pull-right file-edit" href="https://github.com/buschtoens/ember-collect-helper/blob/5bf1a42a/addon/helpers/collect.js#L6" target="_blank">
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+            </a>
+    </h1>
+</div>
+
+
+<div class="content-meta">
+
+
+            Module: <a href="../modules/EmberCollectHelper.html">EmberCollectHelper</a>
+
+
+        <div class="foundat">
+            Defined In: <a href="https://github.com/buschtoens/ember-collect-helper/blob/5bf1a42a/addon/helpers/collect.js#L6">addon/helpers/collect.js:6</a>
+        </div>
+</div>
+
+
+
+  <div class="class-description">
+  <p>The <code>{{collect}}</code> helper takes a <code>source</code> object, a <code>paths</code> array and an
+optional <code>defaultValue</code>, which is used if a given path cannot be found on the
+<code>source</code> object. The <code>defaultValue</code> defaults to <code>null</code>.</p>
+<pre class="code prettyprint"><code class="language-hbs">{{collect source paths defaultValue="foo"}}
+</code></pre>
+<p>If the <code>source</code> <a href="https://www.emberjs.com/api/ember/2.14/namespaces/Ember/methods/isEmpty?anchor=isEmpty">is empty</a>,
+the helper will return an empty array (<code>[]</code>), regardless of the <code>paths</code> that
+were specified.</p>
+<p>If a specified path was not found on the <code>source</code> object, <code>defaultValue</code> is
+put in its place.</p>
+<pre class="code prettyprint"><code class="language-js">const source = {
+  foo: 'ember',
+  bar: 'light',
+  qux: {
+    quax: 'table',
+    quuz: 'great'
+  }
+ };
+ const paths = ['bar', 'qux.quax', 'unknown', 'qux.quuz'];
+</code></pre>
+<pre class="code prettyprint"><code class="language-hbs">{{#each (collect source paths defaultValue="is") as |word|}}
+  {{word}}
+{{/each}}
+</code></pre>
+<pre class="code prettyprint"><code class="language-html">light table is great
+</code></pre>
+<p>The specified <code>paths</code> on the <code>source</code> object are observed. This means that
+updating these values on the <code>source</code> object will cause the helper to
+recompute, just as you would expect.
+You can also replace the <code>source</code> object altogether or change the specified
+<code>paths</code>. Everything will always stay in sync.</p>
+<p>To allow maximum flexibility, <code>paths</code> can also be a string, in which case the
+value is returned as is and not wrapped in an array.
+This means that the following two invocations have different return values:</p>
+<pre class="code prettyprint"><code class="language-js">const source = { foo: 'bar' };
+const arrayPath = ['foo'];
+const singularPath = 'foo';
+</code></pre>
+<pre class="code prettyprint"><code class="language-hbs">{{collect source arrayPath}}    =&gt; ['bar']
+{{collect source singularPath}} =&gt; 'bar'
+</code></pre>
+<p>This is especially useful, when you are replacing <code>{{get}}</code> with
+<code>{{collect}}</code>, but have some surrounding code that still expects the
+unwrapped value for cases where <code>paths</code> is not an array, but also just a
+single path, as it would be with <code>{{get}}</code>.</p>
+<p>You can disable this behavior and make <code>{{collect}}</code> always return an array
+by passing <code>wrapSingular=true</code>.</p>
+<pre class="code prettyprint"><code class="language-hbs">{{collect source "foo" wrapSingular=true}} =&gt; ['bar']
+</code></pre>
+
+  </div>
+
+<div>
+    <div class="page-section">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#tab_index" aria-controls="tab_index" role="tab" data-toggle="tab">Index</a></li>
+            <li role="presentation"><a href="#tab_methods" aria-controls="tab_methods" role="tab" data-toggle="tab">Methods</a></li>
+
+            <li role="presentation"><a href="#tab_properties" aria-controls="tab_properties" role="tab" data-toggle="tab">Properties</a></li>
+
+
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+
+              <form id="options-form" class="form-inline">
+                  Show:
+                  <label for="api-show-inherited" class="checkbox">
+                      <input type="checkbox" id="api-show-inherited" checked>
+                      Inherited
+                  </label>
+          
+                  <label for="api-show-protected" class="checkbox">
+                      <input type="checkbox" id="api-show-protected">
+                      Protected
+                  </label>
+          
+                  <label for="api-show-private" class="checkbox">
+                      <input type="checkbox" id="api-show-private">
+                      Private
+                  </label>
+                  <label for="api-show-deprecated" class="checkbox">
+                      <input type="checkbox" id="api-show-deprecated">
+                      Deprecated
+                  </label>
+          
+              </form>
+
+          <div id="tab_index" role="tabpanel" class="tab-pane active" >
+                  <div class="index-section methods">
+                      <h3>Methods</h3>
+
+                      <ul class="index-list methods">
+                              <li class="index-item method private">
+                                  <a href="#method_collectValues">collectValues</a>
+
+                              </li>
+                              <li class="index-item method">
+                                  <a href="#method_compute">compute</a>
+
+                              </li>
+                              <li class="index-item method private">
+                                  <a href="#method_observedPathsChanged">observedPathsChanged</a>
+
+                              </li>
+                              <li class="index-item method private">
+                                  <a href="#method_updatePaths">updatePaths</a>
+
+                              </li>
+                              <li class="index-item method private">
+                                  <a href="#method_updateSource">updateSource</a>
+
+                              </li>
+                      </ul>
+                  </div>
+
+                  <div class="index-section properties">
+                      <h3>Properties</h3>
+
+                      <ul class="index-list properties">
+                              <li class="index-item property private">
+                                  <a href="#property_isSingular">isSingular</a>
+
+                              </li>
+                              <li class="index-item property private">
+                                  <a href="#property_paths">paths</a>
+
+                              </li>
+                              <li class="index-item property private">
+                                  <a href="#property_source">source</a>
+
+                              </li>
+                      </ul>
+                  </div>
+
+
+          </div>
+
+              <div id="tab_methods" role="tabpanel" class="tab-pane">
+                  <div class="item-list">
+  <div id="method_collectValues" class="method item private">
+  	<span class="method-signature">
+  	<span class="name anchorable-toc">
+  		<a class="fa fa-link toc-anchor" href="#method_collectValues"></a>
+  		collectValues
+  	</span>
+  
+  		<div class="args">
+  			<span class="paren">(</span><ul class="args-list inline commas">
+  				<li class="arg">
+  						<code class="optional">options</code>
+  				</li>
+  			</ul><span class="paren">)</span>
+  		</div>
+  		<span class="returns-inline">
+  			<span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+  		</span>
+  	</span>
+  
+  
+  
+  		<span class="flag private">private</span>
+  
+  
+  
+  
+  	<div class="meta">
+  				<p>
+  				Defined in
+  		<a href="https://github.com/buschtoens/ember-collect-helper/blob/5bf1a42a/addon/helpers/collect.js#L191">addon/helpers/collect.js:191</a>
+  		</p>
+  
+  
+  
+  	</div>
+  
+  	<div class="description"><p>Collects the specified <code>paths</code> from the <code>source</code> object, if present.</p>
+  </div>
+  
+  		<div class="params">
+  			<h4>Parameters:</h4>
+  
+  			<ul class="params-list">
+  				<li class="param">
+  						<code class="param-name optional">[options]</code>
+  						<span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+  						<span class="flag optional" title="This parameter is optional.">optional</span>
+  
+  
+  
+  						<ul class="params-list">
+  							<li class="param">
+  									<code class="param-name optional">[defaultValue=null]</code>
+  									<span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+  									<span class="flag optional" title="This parameter is optional.">optional</span>
+  
+  								<div class="param-description"><p>The value to be used when a
+  paths cannot be found on the <code>source</code> object. Effectively what you would
+  pass to <code>Ember.getWithDefault</code>.</p>
+  </div>
+  
+  							</li>
+  							<li class="param">
+  									<code class="param-name optional">[wrapSingular=false]</code>
+  									<span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+  									<span class="flag optional" title="This parameter is optional.">optional</span>
+  
+  								<div class="param-description"></div>
+  
+  							</li>
+  						</ul>
+  				</li>
+  			</ul>
+  		</div>
+  
+  		<div class="returns">
+  			<h4>Returns:</h4>
+  
+  			<div class="returns-description">
+  						<span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>:
+  					<p>If the given <code>source</code> is present, returns an array of the
+  collected values in the order that they were specified in <code>paths</code>.
+  If the given <code>source</code> is empty, returns an empty array (<code>[]</code>).
+  If paths were not found in <code>source</code>, <code>defaultValue</code> will be inserted in
+  their place.</p>
+  
+  			</div>
+  		</div>
+  
+  </div>
+  <div id="method_compute" class="method item">
+  	<span class="method-signature">
+  	<span class="name anchorable-toc">
+  		<a class="fa fa-link toc-anchor" href="#method_compute"></a>
+  		compute
+  	</span>
+  
+  		<div class="args">
+  			<span class="paren">(</span><ul class="args-list inline commas">
+  				<li class="arg">
+  						<code>source</code>
+  				</li>
+  				<li class="arg">
+  						<code>paths</code>
+  				</li>
+  				<li class="arg">
+  						<code>options</code>
+  				</li>
+  			</ul><span class="paren">)</span>
+  		</div>
+  		<span class="returns-inline">
+  			<span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+  		</span>
+  	</span>
+  
+  
+  
+  
+  
+  
+  
+  	<div class="meta">
+  				<p>
+  				Defined in
+  		<a href="https://github.com/buschtoens/ember-collect-helper/blob/5bf1a42a/addon/helpers/collect.js#L108">addon/helpers/collect.js:108</a>
+  		</p>
+  
+  
+  
+  	</div>
+  
+  
+  		<div class="params">
+  			<h4>Parameters:</h4>
+  
+  			<ul class="params-list">
+  				<li class="param">
+  						<code class="param-name">source</code>
+  						<span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+  
+  
+  					<div class="param-description"><p>The object to collect values from</p>
+  </div>
+  
+  				</li>
+  				<li class="param">
+  						<code class="param-name">paths</code>
+  						<span class="type"><a href="https://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String[][]</a></span>
+  
+  
+  					<div class="param-description"><p>The paths to collect</p>
+  </div>
+  
+  				</li>
+  				<li class="param">
+  						<code class="param-name">options</code>
+  						<span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+  
+  
+  
+  						<ul class="params-list">
+  							<li class="param">
+  									<code class="param-name optional">[defaultValue=null]</code>
+  									<span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+  									<span class="flag optional" title="This parameter is optional.">optional</span>
+  
+  								<div class="param-description"></div>
+  
+  							</li>
+  							<li class="param">
+  									<code class="param-name optional">[wrapSingular=false]</code>
+  									<span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+  									<span class="flag optional" title="This parameter is optional.">optional</span>
+  
+  								<div class="param-description"></div>
+  
+  							</li>
+  						</ul>
+  				</li>
+  			</ul>
+  		</div>
+  
+  		<div class="returns">
+  			<h4>Returns:</h4>
+  
+  			<div class="returns-description">
+  						<span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>:
+  					<p>If the given <code>source</code> is present, returns an array of the
+  collected values in the order that they were specified in <code>paths</code>.
+  If the given <code>source</code> is empty, returns an empty array (<code>[]</code>).</p>
+  
+  			</div>
+  		</div>
+  
+  </div>
+  <div id="method_observedPathsChanged" class="method item private">
+  	<span class="method-signature">
+  	<span class="name anchorable-toc">
+  		<a class="fa fa-link toc-anchor" href="#method_observedPathsChanged"></a>
+  		observedPathsChanged
+  	</span>
+  
+  		<span class="paren">()</span>
+  	</span>
+  
+  
+  
+  		<span class="flag private">private</span>
+  
+  
+  
+  
+  	<div class="meta">
+  				<p>
+  				Defined in
+  		<a href="https://github.com/buschtoens/ember-collect-helper/blob/5bf1a42a/addon/helpers/collect.js#L179">addon/helpers/collect.js:179</a>
+  		</p>
+  
+  
+  
+  	</div>
+  
+  	<div class="description"><p>Called everytime an observed property on the <code>source</code> object changes.
+  Causes the helper to recomputed its value.</p>
+  </div>
+  
+  
+  
+  </div>
+  <div id="method_updatePaths" class="method item private">
+  	<span class="method-signature">
+  	<span class="name anchorable-toc">
+  		<a class="fa fa-link toc-anchor" href="#method_updatePaths"></a>
+  		updatePaths
+  	</span>
+  
+  		<div class="args">
+  			<span class="paren">(</span><ul class="args-list inline commas">
+  				<li class="arg">
+  						<code>newPaths</code>
+  				</li>
+  				<li class="arg">
+  						<code class="optional">options</code>
+  				</li>
+  			</ul><span class="paren">)</span>
+  		</div>
+  		<span class="returns-inline">
+  			<span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+  		</span>
+  	</span>
+  
+  
+  
+  		<span class="flag private">private</span>
+  
+  
+  
+  
+  	<div class="meta">
+  				<p>
+  				Defined in
+  		<a href="https://github.com/buschtoens/ember-collect-helper/blob/5bf1a42a/addon/helpers/collect.js#L148">addon/helpers/collect.js:148</a>
+  		</p>
+  
+  
+  
+  	</div>
+  
+  	<div class="description"><p>Updates the <code>paths</code> that are collected and observed for changes.
+  Also updates the observers on the <code>source</code> object.</p>
+  </div>
+  
+  		<div class="params">
+  			<h4>Parameters:</h4>
+  
+  			<ul class="params-list">
+  				<li class="param">
+  						<code class="param-name">newPaths</code>
+  						<span class="type"><a href="https://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String[][]</a></span>
+  
+  
+  
+  				</li>
+  				<li class="param">
+  						<code class="param-name optional">[options]</code>
+  						<span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+  						<span class="flag optional" title="This parameter is optional.">optional</span>
+  
+  
+  
+  						<ul class="params-list">
+  							<li class="param">
+  									<code class="param-name optional">[isSingular=false]</code>
+  									<span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+  									<span class="flag optional" title="This parameter is optional.">optional</span>
+  
+  								<div class="param-description"></div>
+  
+  							</li>
+  						</ul>
+  				</li>
+  			</ul>
+  		</div>
+  
+  		<div class="returns">
+  			<h4>Returns:</h4>
+  
+  			<div class="returns-description">
+  						<span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+  					<p>If the <code>newPaths</code> were actually different from the old
+  paths and thus an update was performed.</p>
+  
+  			</div>
+  		</div>
+  
+  </div>
+  <div id="method_updateSource" class="method item private">
+  	<span class="method-signature">
+  	<span class="name anchorable-toc">
+  		<a class="fa fa-link toc-anchor" href="#method_updateSource"></a>
+  		updateSource
+  	</span>
+  
+  		<div class="args">
+  			<span class="paren">(</span><ul class="args-list inline commas">
+  				<li class="arg">
+  						<code>newSource</code>
+  				</li>
+  			</ul><span class="paren">)</span>
+  		</div>
+  		<span class="returns-inline">
+  			<span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+  		</span>
+  	</span>
+  
+  
+  
+  		<span class="flag private">private</span>
+  
+  
+  
+  
+  	<div class="meta">
+  				<p>
+  				Defined in
+  		<a href="https://github.com/buschtoens/ember-collect-helper/blob/5bf1a42a/addon/helpers/collect.js#L128">addon/helpers/collect.js:128</a>
+  		</p>
+  
+  
+  
+  	</div>
+  
+  	<div class="description"><p>Updates the <code>source</code> object.</p>
+  </div>
+  
+  		<div class="params">
+  			<h4>Parameters:</h4>
+  
+  			<ul class="params-list">
+  				<li class="param">
+  						<code class="param-name">newSource</code>
+  						<span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+  
+  
+  
+  				</li>
+  			</ul>
+  		</div>
+  
+  		<div class="returns">
+  			<h4>Returns:</h4>
+  
+  			<div class="returns-description">
+  						<span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+  					<p>If the <code>newSource</code> actually was different from the old
+  source and thus an update was performed.</p>
+  
+  			</div>
+  		</div>
+  
+  </div>
+                  </div>
+              </div>
+
+              <div id="tab_properties" role="tabpanel" class="tab-pane">
+                  <div class="item-list">
+  <div id="property_isSingular" class="property item private">
+      <h3 class="name anchorable-toc">
+          <a class="fa fa-link toc-anchor" href="#property_isSingular"></a>
+          isSingular
+      </h3>
+      <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+  
+  
+          <span class="flag private">private</span>
+  
+  
+  
+      <div class="meta">
+                  <p>
+                  Defined in
+          <a href="https://github.com/buschtoens/ember-collect-helper/blob/5bf1a42a/addon/helpers/collect.js#L100">addon/helpers/collect.js:100</a>
+          </p>
+  
+  
+      </div>
+  
+      <div class="description">
+          
+      </div>
+  
+          <p><br><strong>Default:</strong> false</p>
+  
+  
+  </div>
+  <div id="property_paths" class="property item private">
+      <h3 class="name anchorable-toc">
+          <a class="fa fa-link toc-anchor" href="#property_paths"></a>
+          paths
+      </h3>
+      <span class="type"><a href="https://emberjs.com/api/classes/String.html" class="crosslink external" target="_blank">String[]</a></span>
+  
+  
+          <span class="flag private">private</span>
+  
+  
+  
+      <div class="meta">
+                  <p>
+                  Defined in
+          <a href="https://github.com/buschtoens/ember-collect-helper/blob/5bf1a42a/addon/helpers/collect.js#L91">addon/helpers/collect.js:91</a>
+          </p>
+  
+  
+      </div>
+  
+      <div class="description">
+          <p>The paths on <code>source</code> to collect values from and observe for changes.</p>
+  
+      </div>
+  
+  
+  
+  </div>
+  <div id="property_source" class="property item private">
+      <h3 class="name anchorable-toc">
+          <a class="fa fa-link toc-anchor" href="#property_source"></a>
+          source
+      </h3>
+      <span class="type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a> | Null</span>
+  
+  
+          <span class="flag private">private</span>
+  
+  
+  
+      <div class="meta">
+                  <p>
+                  Defined in
+          <a href="https://github.com/buschtoens/ember-collect-helper/blob/5bf1a42a/addon/helpers/collect.js#L82">addon/helpers/collect.js:82</a>
+          </p>
+  
+  
+      </div>
+  
+      <div class="description">
+          <p>The source object whose paths are observed for changes.</p>
+  
+      </div>
+  
+  
+  
+  </div>
+                  </div>
+              </div>
+
+
+      </div>
+    </div>
+</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../assets/vendor/prettify/prettify-min.js"></script>
+    <script>prettyPrint();</script>
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
+    <script src="../assets/vendor/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+    <script src="../assets/vendor/github-slugger/slugger.js"></script>
+    <script src="../assets/js/yuidoc-bootstrap.js"></script>
+</body>
+</html>

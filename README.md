@@ -1,5 +1,7 @@
 # ember-collect-helper
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/buschtoens/ember-collect-helper.svg)](https://greenkeeper.io/)
+
 ![Ember Version](https://embadge.io/v1/badge.svg?start=2.4.0)
 [![Build Status](https://travis-ci.org/buschtoens/ember-collect-helper.svg)](https://travis-ci.org/buschtoens/ember-collect-helper)
 [![npm version](https://badge.fury.io/js/ember-collect-helper.svg)](http://badge.fury.io/js/ember-collect-helper)

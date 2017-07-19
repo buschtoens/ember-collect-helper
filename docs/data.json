@@ -3,7 +3,7 @@
         "name": "ember-collect-helper",
         "description": "Ember.computed.collect as a template helper",
         "url": "https://github.com/buschtoens/ember-collect-helper",
-        "version": "0.1.0.5bf1a42a"
+        "version": "v0.1.1"
     },
     "files": {
         "addon/helpers/collect.js": {

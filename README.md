@@ -5,6 +5,7 @@
 [![npm version](https://badge.fury.io/js/ember-collect-helper.svg)](http://badge.fury.io/js/ember-collect-helper)
 [![Download Total](https://img.shields.io/npm/dt/ember-collect-helper.svg)](http://badge.fury.io/js/ember-collect-helper)
 [![Ember Observer Score](https://emberobserver.com/badges/ember-collect-helper.svg)](https://emberobserver.com/addons/ember-collect-helper)
+[![Greenkeeper badge](https://badges.greenkeeper.io/buschtoens/ember-collect-helper.svg)](https://greenkeeper.io/)
 
 > [`Ember.computed.collect`][computed.collect] as a template helper
 

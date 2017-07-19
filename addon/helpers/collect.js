@@ -212,7 +212,6 @@ export default class extends Helper {
     if (isPresent(source)) {
       const values =  paths.map(path => getWithDefault(source, path, defaultValue));
 
-      console.log((shouldUnwrap ? values[0] : values).constructor);
       return shouldUnwrap ? values[0] : values;
     }
 

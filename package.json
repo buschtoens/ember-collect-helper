@@ -1,17 +1,17 @@
 {
   "name": "ember-collect-helper",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Ember.computed.collect as a template helper",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "ember-helper"
   ],
   "license": "MIT",
-  "author": "",
+  "author": "Jan Buschtöns <jan@buschtoens.me> (https://jan.buschtoens.me)",
   "directories": {
-    "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": "buschtoens/ember-collect-helper",
   "scripts": {
     "build": "ember build",
     "start": "ember server",
@@ -51,6 +51,7 @@
     "node": "^4.5 || 6.* || >= 7.*"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dummy/config",
+    "demoURL": "https://buschtoens.github.io/ember-collect-helper/"
   }
 }

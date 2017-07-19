@@ -3,6 +3,8 @@ import { get, getWithDefault, set } from '@ember/object';
 import { A, makeArray } from '@ember/array';
 import { isPresent } from '@ember/utils';
 
+const EMPTY_ARRAY = Object.freeze(A([]));
+
 /**
  * The `{{collect}}` helper takes a `source` object, a `paths` array and an
  * optional `defaultValue`, which is used if a given path cannot be found on the
@@ -93,9 +95,10 @@ export default class extends Helper {
    *
    * @property paths
    * @type {String[]}
+   * @default []
    * @private
    */
-  paths = A();
+  paths = EMPTY_ARRAY;
 
   /**
    * @property isSingular
@@ -158,7 +161,9 @@ export default class extends Helper {
    * @private
    */
   updatePaths(newPaths, { isSingular = false } = {}) {
-    const oldPaths = get(this, 'paths');
+    // `getWithDefault` is required for compatibility with Ember 2.4
+    // https://github.com/buschtoens/ember-collect-helper/issues/5#issuecomment-316344099
+    const oldPaths = getWithDefault(this, 'paths', EMPTY_ARRAY);
 
     set(this, 'isSingular', isSingular);
 
@@ -214,7 +219,6 @@ export default class extends Helper {
 
       return shouldUnwrap ? values[0] : values;
     }
-
 
     return shouldUnwrap ? defaultValue : [];
   }

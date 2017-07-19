@@ -1,4 +1,4 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { moduleForComponent, test, skip } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { set, setProperties } from '@ember/object';
 import { run, schedule } from '@ember/runloop';
@@ -136,4 +136,38 @@ test('updating observed properties on the source object triggers a recomputation
       assert.equal(this.$().text().trim(), 'b2,d,foo', 'deeply nested key was updated correctly');
     });
   });
+});
+
+skip('performance is okay-ish for the base case compared to `{{get}}`', function(assert) {
+  const ITERATION_COUNT = 1e4;
+
+  setProperties(this, {
+    source: lettersAndNumbers(),
+    paths: 'c.3.x',
+    iterationArray: new Array(ITERATION_COUNT).fill(0)
+  });
+
+
+  window.performance.mark('get.start');
+  this.render(hbs`{{#each iterationArray as |e|}}{{get source paths}}{{/each}}`);
+  window.performance.mark('get.done');
+  window.performance.measure('get', 'get.start', 'get.done');
+
+  window.performance.mark('collect.start');
+  this.render(hbs`{{#each iterationArray as |e|}}{{collect source paths}}{{/each}}`);
+  window.performance.mark('collect.done');
+  window.performance.measure('collect', 'collect.start', 'collect.done');
+
+  const measurements = {};
+  for (const { name, duration } of window.performance.getEntriesByType('measure')) {
+    measurements[name] = {
+      total: duration,
+      average: duration / ITERATION_COUNT
+    }
+  }
+  const factor = measurements.collect.total / measurements.get.total;
+
+  // console.log(measurements, { factor });
+
+  assert.ok(factor < 2, `{{collect}} is less twice as slow as {{get}}. Factor is ${factor}`);
 });

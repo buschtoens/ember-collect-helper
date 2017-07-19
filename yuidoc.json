@@ -3,6 +3,7 @@
   "description": "",
   "url": "https://github.com/buschtoens/ember-collect-helper",
   "options": {
+    "enabledEnvironments": ["production"],
     "paths": [
       "addon"
     ],

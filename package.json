@@ -1,6 +1,6 @@
 {
   "name": "ember-collect-helper",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Ember.computed.collect as a template helper",
   "keywords": [
     "ember-addon",

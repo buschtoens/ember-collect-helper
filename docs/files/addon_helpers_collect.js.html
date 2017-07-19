@@ -54,8 +54,8 @@
                     <li class="panel panel-default">
                         <div class="panel-heading" role="tab" id="sidebar-version-heading">
                             <h4 class="panel-title">
-                                <a role="button" href="https://github.com/buschtoens/ember-collect-helper/commits/v0.1.1" target="_blank">
-                                  Tag: v0.1.1
+                                <a role="button" href="https://github.com/buschtoens/ember-collect-helper/commits/v0.1.2" target="_blank">
+                                  Tag: v0.1.2
                                 </a>
                             </h4>
                         </div>
@@ -112,6 +112,8 @@ import Helper from &#x27;@ember/component/helper&#x27;;
 import { get, getWithDefault, set } from &#x27;@ember/object&#x27;;
 import { A, makeArray } from &#x27;@ember/array&#x27;;
 import { isPresent } from &#x27;@ember/utils&#x27;;
+
+const EMPTY_ARRAY = Object.freeze(A([]));
 
 /**
  * The &#x60;{{collect}}&#x60; helper takes a &#x60;source&#x60; object, a &#x60;paths&#x60; array and an
@@ -203,9 +205,10 @@ export default class extends Helper {
    *
    * @property paths
    * @type {String[]}
+   * @default []
    * @private
    */
-  paths = A();
+  paths = EMPTY_ARRAY;
 
   /**
    * @property isSingular
@@ -268,7 +271,9 @@ export default class extends Helper {
    * @private
    */
   updatePaths(newPaths, { isSingular = false } = {}) {
-    const oldPaths = get(this, &#x27;paths&#x27;);
+    // &#x60;getWithDefault&#x60; is required for compatibility with Ember 2.4
+    // https://github.com/buschtoens/ember-collect-helper/issues/5#issuecomment-316344099
+    const oldPaths = getWithDefault(this, &#x27;paths&#x27;, EMPTY_ARRAY);
 
     set(this, &#x27;isSingular&#x27;, isSingular);
 
@@ -324,7 +329,6 @@ export default class extends Helper {
 
       return shouldUnwrap ? values[0] : values;
     }
-
 
     return shouldUnwrap ? defaultValue : [];
   }

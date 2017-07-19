@@ -3,7 +3,7 @@
         "name": "ember-collect-helper",
         "description": "Ember.computed.collect as a template helper",
         "url": "https://github.com/buschtoens/ember-collect-helper",
-        "version": "v0.1.1"
+        "version": "v0.1.2"
     },
     "files": {
         "addon/helpers/collect.js": {
@@ -30,7 +30,7 @@
             "namespaces": {},
             "tag": "module",
             "file": "addon/helpers/collect.js",
-            "line": 6,
+            "line": 8,
             "description": "The `{{collect}}` helper takes a `source` object, a `paths` array and an\noptional `defaultValue`, which is used if a given path cannot be found on the\n`source` object. The `defaultValue` defaults to `null`.\n\n```hbs\n{{collect source paths defaultValue=\"foo\"}}\n```\n\nIf the `source` [is empty](https://www.emberjs.com/api/ember/2.14/namespaces/Ember/methods/isEmpty?anchor=isEmpty),\nthe helper will return an empty array (`[]`), regardless of the `paths` that\nwere specified.\n\nIf a specified path was not found on the `source` object, `defaultValue` is\nput in its place.\n\n```js\nconst source = {\n  foo: 'ember',\n  bar: 'light',\n  qux: {\n    quax: 'table',\n    quuz: 'great'\n  }\n };\n const paths = ['bar', 'qux.quax', 'unknown', 'qux.quuz'];\n```\n\n```hbs\n{{#each (collect source paths defaultValue=\"is\") as |word|}}\n  {{word}}\n{{/each}}\n```\n\n```html\nlight table is great\n```\n\nThe specified `paths` on the `source` object are observed. This means that\nupdating these values on the `source` object will cause the helper to\nrecompute, just as you would expect.\nYou can also replace the `source` object altogether or change the specified\n`paths`. Everything will always stay in sync.\n\nTo allow maximum flexibility, `paths` can also be a string, in which case the\nvalue is returned as is and not wrapped in an array.\nThis means that the following two invocations have different return values:\n\n```js\nconst source = { foo: 'bar' };\nconst arrayPath = ['foo'];\nconst singularPath = 'foo';\n```\n\n```hbs\n{{collect source arrayPath}}    => ['bar']\n{{collect source singularPath}} => 'bar'\n```\n\nThis is especially useful, when you are replacing `{{get}}` with\n`{{collect}}`, but have some surrounding code that still expects the\nunwrapped value for cases where `paths` is not an array, but also just a\nsingle path, as it would be with `{{get}}`.\n\nYou can disable this behavior and make `{{collect}}` always return an array\nby passing `wrapSingular=true`.\n\n```hbs\n{{collect source \"foo\" wrapSingular=true}} => ['bar']\n```",
             "extends": "Ember.Helper"
         }
@@ -47,7 +47,7 @@
             "module": "EmberCollectHelper",
             "namespace": "",
             "file": "addon/helpers/collect.js",
-            "line": 6,
+            "line": 8,
             "description": "The `{{collect}}` helper takes a `source` object, a `paths` array and an\noptional `defaultValue`, which is used if a given path cannot be found on the\n`source` object. The `defaultValue` defaults to `null`.\n\n```hbs\n{{collect source paths defaultValue=\"foo\"}}\n```\n\nIf the `source` [is empty](https://www.emberjs.com/api/ember/2.14/namespaces/Ember/methods/isEmpty?anchor=isEmpty),\nthe helper will return an empty array (`[]`), regardless of the `paths` that\nwere specified.\n\nIf a specified path was not found on the `source` object, `defaultValue` is\nput in its place.\n\n```js\nconst source = {\n  foo: 'ember',\n  bar: 'light',\n  qux: {\n    quax: 'table',\n    quuz: 'great'\n  }\n };\n const paths = ['bar', 'qux.quax', 'unknown', 'qux.quuz'];\n```\n\n```hbs\n{{#each (collect source paths defaultValue=\"is\") as |word|}}\n  {{word}}\n{{/each}}\n```\n\n```html\nlight table is great\n```\n\nThe specified `paths` on the `source` object are observed. This means that\nupdating these values on the `source` object will cause the helper to\nrecompute, just as you would expect.\nYou can also replace the `source` object altogether or change the specified\n`paths`. Everything will always stay in sync.\n\nTo allow maximum flexibility, `paths` can also be a string, in which case the\nvalue is returned as is and not wrapped in an array.\nThis means that the following two invocations have different return values:\n\n```js\nconst source = { foo: 'bar' };\nconst arrayPath = ['foo'];\nconst singularPath = 'foo';\n```\n\n```hbs\n{{collect source arrayPath}}    => ['bar']\n{{collect source singularPath}} => 'bar'\n```\n\nThis is especially useful, when you are replacing `{{get}}` with\n`{{collect}}`, but have some surrounding code that still expects the\nunwrapped value for cases where `paths` is not an array, but also just a\nsingle path, as it would be with `{{get}}`.\n\nYou can disable this behavior and make `{{collect}}` always return an array\nby passing `wrapSingular=true`.\n\n```hbs\n{{collect source \"foo\" wrapSingular=true}} => ['bar']\n```"
         }
     },
@@ -55,7 +55,7 @@
     "classitems": [
         {
             "file": "addon/helpers/collect.js",
-            "line": 82,
+            "line": 84,
             "description": "The source object whose paths are observed for changes.",
             "itemtype": "property",
             "name": "source",
@@ -67,11 +67,12 @@
         },
         {
             "file": "addon/helpers/collect.js",
-            "line": 91,
+            "line": 93,
             "description": "The paths on `source` to collect values from and observe for changes.",
             "itemtype": "property",
             "name": "paths",
             "type": "{String[]}",
+            "default": "[]",
             "access": "private",
             "tagname": "",
             "class": "CollectHelper",
@@ -79,7 +80,7 @@
         },
         {
             "file": "addon/helpers/collect.js",
-            "line": 100,
+            "line": 103,
             "itemtype": "property",
             "name": "isSingular",
             "type": "{Boolean}",
@@ -91,7 +92,7 @@
         },
         {
             "file": "addon/helpers/collect.js",
-            "line": 108,
+            "line": 111,
             "itemtype": "method",
             "name": "compute",
             "params": [
@@ -136,7 +137,7 @@
         },
         {
             "file": "addon/helpers/collect.js",
-            "line": 128,
+            "line": 131,
             "description": "Updates the `source` object.",
             "itemtype": "method",
             "name": "updateSource",
@@ -158,7 +159,7 @@
         },
         {
             "file": "addon/helpers/collect.js",
-            "line": 148,
+            "line": 151,
             "description": "Updates the `paths` that are collected and observed for changes.\nAlso updates the observers on the `source` object.",
             "itemtype": "method",
             "name": "updatePaths",
@@ -195,7 +196,7 @@
         },
         {
             "file": "addon/helpers/collect.js",
-            "line": 179,
+            "line": 184,
             "description": "Called everytime an observed property on the `source` object changes.\nCauses the helper to recomputed its value.",
             "itemtype": "method",
             "name": "observedPathsChanged",
@@ -206,7 +207,7 @@
         },
         {
             "file": "addon/helpers/collect.js",
-            "line": 191,
+            "line": 196,
             "description": "Collects the specified `paths` from the `source` object, if present.",
             "itemtype": "method",
             "name": "collectValues",

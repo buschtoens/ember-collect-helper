@@ -4,6 +4,60 @@ import { A, makeArray } from '@ember/array';
 import { isPresent } from '@ember/utils';
 
 /**
+ * The `{{collect}}` helper takes a `source` object, a `paths` array and an
+ * optional `defaultValue`, which is used if a given path cannot be found on the
+ * `source` object. The `defaultValue` defaults to `null`.
+ *
+ * ```hbs
+ * {{collect source paths defaultValue="foo"}}
+ * ```
+ *
+ * If the `source` [is empty](https://www.emberjs.com/api/ember/2.14/namespaces/Ember/methods/isEmpty?anchor=isEmpty),
+ * the helper will return an empty array (`[]`), regardless of the `paths` that
+ * were specified.
+ *
+ * If a specified path was not found on the `source` object, `defaultValue` is
+ * put in its place.
+ *
+ * ```js
+ * const source = {
+ *   foo: 'ember',
+ *   bar: 'light',
+ *   qux: {
+ *     quax: 'table',
+ *     quuz: 'great'
+ *   }
+ *  };
+ *  const paths = ['bar', 'qux.quax', 'unknown', 'qux.quuz'];
+ * ```
+ *
+ * ```hbs
+ * {{#each (collect source paths defaultValue="is") as |word|}}
+ *   {{word}}
+ * {{/each}}
+ * ```
+ *
+ * ```html
+ * light table is great
+ * ```
+ *
+ * The specified `paths` on the `source` object are observed. This means that
+ * updating these values on the `source` object will cause the helper to
+ * recompute, just as you would expect.
+ * You can also replace the `source` object altogether or change the specified
+ * `paths`. Everything will always stay in sync.
+ *
+ * To allow maximum flexibility, `paths` can also be a string, in which case it
+ * is automatically wrapped in an array. This means that the following two
+ * invocations are functionally equivalent, assuming that you have an
+ * [`{{array}}`](https://github.com/DockYard/ember-composable-helpers#array)
+ * helper which returns an array.
+ *
+ * ```hbs
+ * {{collect source (array "foo")}}
+ * {{collect source "foo"}}
+ * ```
+ *
  * @module EmberCollectHelper
  * @class CollectHelper
  * @extends Ember.Helper

@@ -23,7 +23,7 @@ For detailed documentation, please view the [API docs][docs].
 
 You have to imagine `{{collect source paths}}` as the love child of
 [`{{get}}`][helpers.get] and [`Ember.computed.collect`][computed.collect].
-In its simplest form, you pass a `source` object and array of `paths`.
+In its simplest form, you pass a `source` object and an array of `paths`.
 `{{collect}}` will then return an array of the values from `source`. Just as if
 you would have called `{{get source path}}` for every path of the `paths` array.
 
@@ -93,11 +93,11 @@ strings.
 
 In that case, the helper will not return an array with one value, but rather
 only the value itself, just like `{{get}}` would. This is especially useful,
-when your adding `{{collect}}` to an existing code base and only need its
-capabilites in isolated cases, that you enable by passing an array of paths
+when you're adding `{{collect}}` to an existing code base and only need its
+capabilities in isolated cases, that you enable by passing an array of paths
 instead of a single path.
 
-If you want `{{collect}}` to force returning an array, you can pass `wrapSingular=true`.
+If you want to force `{{collect}}` to return an array, you can pass `wrapSingular=true`.
 
 ```hbs
 {{collect (hash foo="bar") "foo" wrapSingular=true}} => ['bar']
